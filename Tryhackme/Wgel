@@ -1,1 +1,90 @@
 
+Hi guys welcome to the wgel ctf walkthrough.
+
+This starts with finding the flags of the user and the root flag
+
+![image.png](attachment:efbeff0a-11bf-4abe-9eb1-0e62aef14f39:image.png)
+
+1.Reconnnaisance
+
+So we start by doing a reconnaisance on the ip shared by trackme by using nmap to scan the open ports.
+
+![image.png](attachment:8aa64360-a355-4a75-9a82-09225ec2a2fe:image.png)
+
+The ip shared was 10.10.71.108 on my end I find two ports open port 22 and port 80
+
+![image.png](attachment:a634d12f-8d69-4634-bb7e-e88977431c56:image.png)
+
+Port 80  being a web port will have a website, on visiting the website on http://10.10.71.108
+
+![image.png](attachment:ef916648-8cc9-42ae-a8c5-696e9dc567b3:image.png)
+
+Right click on the page and view page source.
+
+On checking i find a potential username as Jessie as shown:
+
+![image.png](attachment:0509d72c-a26e-48b6-bb5b-ab51f24946e4:image.png)
+
+I used gobuster to find the hidden pages and directories .
+
+![image.png](attachment:3e6d58bf-2f24-4d3c-aadd-49fcb27ec2de:image.png)
+
+![image.png](attachment:a3a2cb78-111a-4806-bfa2-6f6bf9ca5b54:image.png)
+
+I found a sitemap and server status but on further enumeration i discoverd more hidden pages on the sitemap.
+
+![image.png](attachment:5e113d99-94c6-4e04-8728-73af7179a2b8:image.png)
+
+On visiting the site at http://10.10.155.178/sitemap/.ssh, a **id_rsa** file was found.
+
+![image.png](attachment:ddc33a27-4e61-49fe-8ec5-a4fa70b7c161:image.png)
+
+On clicking the file, a **RSA Private Key** was found, which led to the initial foothold on the machine.
+
+![image.png](attachment:eff79f50-2fe2-489f-b384-231e11dabcf7:image.png)
+
+I downloaded the id_rsa key and stored it under id_rsa
+
+After saving it i changed the permission and logged in using the username: Jessie and the id_rsa key.
+
+![image.png](attachment:a70bd19f-08c4-47e0-b818-489949be4aa4:image.png)
+
+Once done i was able to log in with ssh
+
+![image.png](attachment:a7fc9467-5b78-4801-839e-e52a7182704b:image.png)
+
+and we are in:
+
+![image.png](attachment:3b79bd9e-a1dc-423a-b8bf-6897fdc290b0:image.png)
+
+after navigating to the documents folder i found a txt file and there we get our flag.
+
+![image.png](attachment:5127ec88-1d1e-493e-965a-f5e442da2163:image.png)
+
+# PRIVILEDGE ESCALATION
+
+ In order to get the root user flag we have to operate and gain the root privilege. 
+
+I tried running the sudo -l to see which commands were available and found:
+
+![image.png](attachment:12833cde-77ca-4cec-ab70-5a7dc4e20bb1:image.png)
+
+We can see that running the wget binary will allow us to get root priviledges. We can get this on GTFOBins. Search for wget
+
+After doing some research i had to use  the file download and created a server listening on 1234
+
+I opened a server on the attacker machine and used the bin to get the root file
+
+![image.png](attachment:a5ffbc19-de35-45ed-b647-c536f528bada:image.png)
+
+![image.png](attachment:1e9fe70a-5de5-41d7-bbba-8776cbe6f6a1:image.png)
+
+![image.png](attachment:a56c7c49-4199-4739-9d20-3a481db17376:image.png)
+
+After running the wget bin file i got the flag which is highlighted.
+
+b1b968b37519ad1daa6408188649263d
+
+Use the below link to access the screenshots
+
+https://www.notion.so/Wgel-ctf-25d878293d7280c2851bf3bd39ecb2a6?source=copy_link
