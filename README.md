@@ -1,1 +1,3 @@
-Welcome! This repo contains my end-to-end walkthroughs for CTF rooms and labs (e.g., TryHackMe, Hack The Box). Each write-up focuses on repeatable methodology, clear reasoning, and clean command sequences you can run without guesswork. I include both the intended path and viable alternatives when they add learning value.
+# CTF Walkthroughs
+
+Concise, reproducible write-ups for TryHackMe/HTB labs. Each guide lists exact steps (recon → foothold → privesc), the reasoning behind them, and quick blue-team takeaways. Performed on authorized targets for learning and practice.
